@@ -144,7 +144,7 @@ run_tSNE <- function(
 }
 
 # Compute and plot the t-SNE
-plot_tSNE <- function(
+run_plot_tSNE <- function(
 	pca=pca, 
 	pc=pc, 
 	iter=2000,
@@ -185,8 +185,8 @@ plot_tSNE <- function(
 			legend.text = element_text(size =16),
 			legend.title = element_text(size =16 ,face="bold"),
 			plot.title = element_text(size=18, face="bold", hjust = 0.5),
-			aspect.ratio=1,
-			legend.position="none"
+			aspect.ratio=1#,
+			#legend.position="none"
 		)
 	} else {
 		g<-ggplot(tSNE, aes(tSNE_1,tSNE_2)) +
@@ -208,8 +208,8 @@ plot_tSNE <- function(
 			legend.text = element_text(size =16),
 			legend.title = element_text(size =16 ,face="bold"),
 			plot.title = element_text(size=18, face="bold", hjust = 0.5),
-			aspect.ratio=1,
-			legend.position="none"
+			aspect.ratio=1#,
+			#legend.position="none"
 		)
 	}
 	print(g)
@@ -218,7 +218,7 @@ plot_tSNE <- function(
 
 
 # Plot the pre-computed t-SNE
-plot_tSNE_2 <- function(tsne=tsne, conditions=conditions, colours=colours){
+plot_tSNE <- function(tsne=tsne, conditions=conditions, colours=colours){
 
 	tSNE <- data.frame(
 		tSNE_1=tsne[,1],
@@ -251,8 +251,8 @@ plot_tSNE_2 <- function(tsne=tsne, conditions=conditions, colours=colours){
 		legend.text = element_text(size =16),
 		legend.title = element_text(size =16 ,face="bold"),
 		plot.title = element_text(size=18, face="bold", hjust = 0.5),
-		aspect.ratio=1,
-		legend.position="none"
+		aspect.ratio=1#,
+		#legend.position="none"
 	)
 	print(g)
 	return(tSNE)
@@ -1032,7 +1032,7 @@ plot_dm_3D_transparent <- function(dm=dm, dc=c(1:3), condition=condition, colour
 #                                         #
 ###########################################
 
-get_lineage <- function(dm=dm, dim=c(0:20), condition=condition, start=start, end=end){
+get_lineage <- function(dm=dm, dim=c(0:20), condition=condition, start=start, end=end, shrink.method="cosine"){
 
 	data <- data.frame(
 		dm@eigenvectors[,dim]
@@ -1043,13 +1043,8 @@ get_lineage <- function(dm=dm, dim=c(0:20), condition=condition, start=start, en
 		start.clus = start, 
 		end.clus=end,
 		maxit=100000,
-		# stretch=10,
-		# reweight=FALSE,
-		# shrink.method="cosine"
-		shrink.method="tricube"
-		# shrink.method="density"
-		# drop.multi=FALSE
-		# drop.multi=TRUE
+		shrink.method=shrink.method
+		# shrink.method="tricube"
 	)
 
 	return(crv)
